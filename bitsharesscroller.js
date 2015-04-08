@@ -7,7 +7,8 @@
 	==============================================================================
       jQuery('.bitsharesticker').bitsharesticker({
           title : 'Bitshares Checkout Live Ticker',
-          source: 'callbacks/callback_getfeedprices.php',
+          source: 'bitshares/checkout/callbacks/callback_getfeedprices.php',
+          currencyTemplateSource: 'bitshares/checkout/Common-Currency.json',
           currencyPrimary: primaryAssets,
           currencySecondary: secondaryAssets
       });
@@ -86,7 +87,7 @@
 		function updater(){
             jQuery.ajax({
                 url: options.source + '?assets=' + currencyUniqueList,
-                type: 'post',
+                type: 'get',
                 dataType: 'json',
                 timeout: 15000, 
                 error:function(jqXHR, textStatus, errorThrown){
@@ -258,8 +259,8 @@
 	    function getCurrencyCodes()
 	    {
             jQuery.ajax({
-                url: "Common-Currency.json",
-                type: 'post',
+                url: options.currencyTemplateSource,
+                type: 'get',
                 dataType: 'json',
                 timeout: 15000, 
                  error:function(jqXHR, textStatus, errorThrown){
@@ -363,10 +364,11 @@
 	};
 	jQuery.fn.bitsharesticker.defaults = {
 		title: '',
-		normalRate: 10,
+		normalRate: 15,
 		hoverRate: 100,
 		tickerOnly: false,
 		source: '',
+		currencyTemplateSource: '',
 		currencyPrimary: '',
 		currencySecondary: '',
 		updateInterval: 300
